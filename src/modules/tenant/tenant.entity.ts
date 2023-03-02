@@ -1,58 +1,56 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
-import { BaseEntity } from "../_base/base.entity";
-import { BaseTenantEntity } from "../_base/baseTenant.entity";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity } from '../_base/base.entity'
+import { BaseTenantEntity } from '../_base/baseTenant.entity'
 
-@Index("uk_tenant_code", ["tenant_code"], { unique: true })
-  @Index("idx_created_at", ["created_at"], {})
-  @Entity("sys_tenant", { schema: "race_nestjs_admin" })
-export class TenantEntity extends BaseTenantEntity{
-
-  @Column("varchar", {
-    name: "tenant_name",
+@Index('uk_tenant_code', ['tenant_code'], { unique: true })
+@Index('idx_created_at', ['created_at'], {})
+@Entity('sys_tenant', { schema: 'race_nestjs_admin' })
+export class TenantEntity extends BaseTenantEntity {
+  @Column('varchar', {
+    name: 'tenant_name',
     nullable: true,
-    comment: "租户名称",
+    comment: '租户名称',
     length: 50,
   })
-  tenant_name: string | null;
+  tenant_name: string | null
 
-  @Column("tinyint", {
-    name: "status",
+  @Column('tinyint', {
+    name: 'status',
     nullable: true,
-    comment: "状态  0：停用    1：正常",
+    comment: '状态  0：停用    1：正常',
     unsigned: true,
   })
-  status: number | null;
+  status: number | null
 
-  @Column("varchar", {
-    name: "remark",
+  @Column('varchar', {
+    name: 'remark',
     nullable: true,
-    comment: "备注",
+    comment: '备注',
     length: 200,
   })
-  remark: string | null;
+  remark: string | null
 
-  @Column("bigint", {
-    name: "user_id",
+  @Column('bigint', {
+    name: 'user_id',
     nullable: true,
-    comment: "登录账号ID",
+    comment: '登录账号ID',
     unsigned: true,
   })
-  user_id: number | null;
+  user_id: number | null
 
-  @Column("varchar", {
-    name: "username",
+  @Column('varchar', {
+    name: 'username',
     nullable: true,
-    comment: "登录账号",
+    comment: '登录账号',
     length: 50,
   })
-  username: string | null;
+  username: string | null
 
-  @Column("tinyint", {
-    name: "sys_tenant",
+  @Column('tinyint', {
+    name: 'sys_tenant',
     nullable: true,
-    comment: "系统租户   0：否   1：是",
+    comment: '系统租户   0：否   1：是',
     unsigned: true,
   })
-  sys_tenant: number | null;
-
+  sys_tenant: number | null
 }

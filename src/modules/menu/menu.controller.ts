@@ -1,21 +1,30 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
-import { MenuService } from './menu.service';
-import { Result } from 'src/common/utils/result';
-import { QueryMenuDto } from './dto/query-menu.dto';
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
+import { MenuService } from './menu.service'
+import { Result } from 'src/common/utils/result'
+import { QueryMenuDto } from './dto/query-menu.dto'
+import { CreateMenuDto } from './dto/create-menu.dto'
+import { UpdateMenuDto } from './dto/update-menu.dto'
 
 @ApiTags('菜单相关')
 @Controller('v1/menus')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class MenuController {
-  constructor(
-    private readonly menuService: MenuService
-  ) { }
+  constructor(private readonly menuService: MenuService) {}
   @Get()
   @ApiOperation({ summary: '查询菜单列表' })
   @Permissions('sys:menu:list')
@@ -31,7 +40,6 @@ export class MenuController {
     const res = await this.menuService.create(dto)
     return Result.ok(res)
   }
-
 
   @Get(':id')
   @ApiOperation({ summary: '查询菜单' })

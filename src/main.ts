@@ -1,16 +1,14 @@
 import { NestFactory } from '@nestjs/core'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 import { LoggerMiddleware } from './common/middleware/logger.middleware'
-import { ConfigService } from "@nestjs/config"
-import { BadRequestException, Logger, ValidationError, ValidationPipe } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import * as express from 'express'
 import * as compression from 'compression'
-import * as rateLimit from 'express-rate-limit'
-import * as csurf from 'csurf'
-import * as helmet from 'helmet';
+import rateLimit from 'express-rate-limit'
+import helmet from 'helmet'
 import { AllExceptionsFilter } from './common/exception/all-exception.filter'
-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -31,20 +29,22 @@ async function bootstrap() {
     }),
   )
   // 漏洞保护
-  app.use(helmet());
+  app.use(helmet())
   // CSRF保护
   // app.use(csurf())
 
   // 日志中间件
   app.use(new LoggerMiddleware().use)
 
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    transformOptions: {
-      enableImplicitConversion: true
-    },
-    // exceptionFactory: (errors: ValidationError[]) => new BadRequestException('参数校验错误')
-  }))
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+      // exceptionFactory: (errors: ValidationError[]) => new BadRequestException('参数校验错误')
+    }),
+  )
   // 所有异常
   app.useGlobalFilters(new AllExceptionsFilter())
   // 设置 api 访问前缀

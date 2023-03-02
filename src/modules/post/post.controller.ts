@@ -1,23 +1,30 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Result } from 'src/common/utils/result';
-import { CreatePostDto } from './dto/create-post.dto';
-import { QueryPostDto } from './dto/query-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { PostService } from './post.service';
-
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { RolesGuard } from 'src/common/guards/roles.guard'
+import { Result } from 'src/common/utils/result'
+import { CreatePostDto } from './dto/create-post.dto'
+import { QueryPostDto } from './dto/query-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { PostService } from './post.service'
 
 @ApiTags('岗位相关')
 @Controller('v1/posts')
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class PostController {
-
-  constructor(
-    private readonly postService: PostService
-  ) { }
+  constructor(private readonly postService: PostService) {}
 
   @Get()
   @ApiOperation({ summary: '查询岗位列表' })
@@ -34,7 +41,6 @@ export class PostController {
     const res = await this.postService.create(dto)
     return Result.ok(res)
   }
-
 
   @Get(':id')
   @ApiOperation({ summary: '查询岗位' })
@@ -62,6 +68,4 @@ export class PostController {
     const res = await this.postService.deleteById(id)
     return Result.ok(res)
   }
-
-
 }

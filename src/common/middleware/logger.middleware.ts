@@ -1,5 +1,5 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Injectable, NestMiddleware } from '@nestjs/common'
+import type { Request, Response } from 'express'
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
@@ -11,9 +11,11 @@ export class LoggerMiddleware implements NestMiddleware {
       Status code: ${res.statusCode}
       Parmas: ${JSON.stringify(req.params)}
       Query: ${JSON.stringify(req.query)}
-      Body: ${JSON.stringify(req.body)} \n  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+      Body: ${JSON.stringify(
+        req.body,
+      )} \n  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     `
-    console.log('LoggerMiddleware',logFormat);
-    next();
+    console.log('LoggerMiddleware', logFormat)
+    next()
   }
 }

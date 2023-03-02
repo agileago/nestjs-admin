@@ -1,59 +1,57 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
-import { BaseEntity } from "../_base/base.entity";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity } from '../_base/base.entity'
 
-@Index("idx_pid", ["pid"], {})
-@Index("idx_sort", ["sort"], {})
-  @Entity("sys_menu", { schema: "race_nestjs_admin" })
+@Index('idx_pid', ['pid'], {})
+@Index('idx_sort', ['sort'], {})
+@Entity('sys_menu', { schema: 'race_nestjs_admin' })
 export class MenuEntity extends BaseEntity {
-
-  @Column("bigint", {
-    name: "pid",
+  @Column('bigint', {
+    name: 'pid',
     nullable: true,
-    comment: "上级ID，一级菜单为0",
+    comment: '上级ID，一级菜单为0',
   })
-  pid: number | null;
-  
-  @Column("varchar", {
-    name: "name",
+  pid: number | null
+
+  @Column('varchar', {
+    name: 'name',
     nullable: true,
-    comment: "菜单名称",
+    comment: '菜单名称',
     length: 255,
   })
-  name: string | null;
+  name: string | null
 
-  @Column("varchar", {
-    name: "url",
+  @Column('varchar', {
+    name: 'url',
     nullable: true,
-    comment: "菜单URL",
+    comment: '菜单URL',
     length: 200,
   })
-  url: string | null;
+  url: string | null
 
-  @Column("varchar", {
-    name: "permissions",
+  @Column('varchar', {
+    name: 'permissions',
     nullable: true,
-    comment: "授权(多个用逗号分隔，如：sys:user:list,sys:user:add)",
+    comment: '授权(多个用逗号分隔，如：sys:user:list,sys:user:add)',
     length: 500,
   })
-  permissions: string | null;
+  permissions: string | null
 
-  @Column("tinyint", {
-    name: "type",
+  @Column('tinyint', {
+    name: 'type',
     nullable: true,
-    comment: "类型   0：菜单   1：按钮",
+    comment: '类型   0：菜单   1：按钮',
     unsigned: true,
   })
-  type: number | null;
+  type: number | null
 
-  @Column("varchar", {
-    name: "icon",
+  @Column('varchar', {
+    name: 'icon',
     nullable: true,
-    comment: "菜单图标",
+    comment: '菜单图标',
     length: 50,
   })
-  icon: string | null;
+  icon: string | null
 
-  @Column("int", { name: "sort", nullable: true, comment: "排序" })
-  sort: number | null;
-
+  @Column('int', { name: 'sort', nullable: true, comment: '排序' })
+  sort: number | null
 }

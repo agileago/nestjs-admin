@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { classToPlain, plainToClass } from 'class-transformer';
-import { Repository } from 'typeorm';
-import { CreateTenantDto } from './dto/create.dto';
-import { QueryTenantDto } from './dto/query.dto';
-import { UpdateTenantDto } from './dto/update.dto';
-import { TenantEntity } from './tenant.entity';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { InjectRepository } from '@nestjs/typeorm'
+import { instanceToPlain, plainToClass } from 'class-transformer'
+import { Repository } from 'typeorm'
+import { CreateTenantDto } from './dto/create.dto'
+import { QueryTenantDto } from './dto/query.dto'
+import { UpdateTenantDto } from './dto/update.dto'
+import { TenantEntity } from './tenant.entity'
 
 @Injectable()
 export class TenantService {
@@ -14,7 +14,7 @@ export class TenantService {
     @InjectRepository(TenantEntity)
     private readonly tenantRepo: Repository<TenantEntity>,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   // 创建
   async create(dto: CreateTenantDto): Promise<Record<string, any>> {
@@ -33,10 +33,10 @@ export class TenantService {
       where,
       order: { created_at: 'DESC' },
       skip: size * (page - 1),
-      take: size
+      take: size,
     })
     return {
-      list: classToPlain(result),
+      list: instanceToPlain(result),
       page: page,
       size: size,
       count: total,
@@ -45,18 +45,18 @@ export class TenantService {
 
   // 根据ID查找
   async findById(id: number): Promise<Record<string, any>> {
-    let findOne = await this.tenantRepo.findOne(id)
+    const findOne = await this.tenantRepo.findOne({ where: { id } })
     if (!findOne) {
       throw new NotFoundException()
     }
-    return classToPlain(findOne)
+    return instanceToPlain(findOne)
   }
 
   // 根据ID更新
   async updateById(dto: UpdateTenantDto): Promise<Record<string, any>> {
     await this.findById(dto.id)
     await this.tenantRepo.update(dto.id, dto)
-    return classToPlain(await this.findById(dto.id))
+    return instanceToPlain(await this.findById(dto.id))
   }
 
   // 根据ID删除
@@ -65,5 +65,4 @@ export class TenantService {
     const res = await this.tenantRepo.softDelete(id)
     return res
   }
-
 }

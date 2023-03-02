@@ -1,23 +1,19 @@
-
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
+import { CanActivate, ExecutionContext, Injectable, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Reflector } from '@nestjs/core'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector, private readonly config: ConfigService) { }
-  async canActivate(
-    context: ExecutionContext,
-  ): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
+  constructor(private reflector: Reflector, private readonly config: ConfigService) {}
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest()
+    const user = request.user
     // 当前请求所需权限
-    const currentPerm = this.reflector.get<string>('permissions', context.getHandler());
+    const currentPerm = this.reflector.get<string>('permissions', context.getHandler())
     Logger.log(currentPerm, '当前所需权限:')
     // 标识不需要权限
     if (!currentPerm) {
-      return true;
+      return true
     }
     if (this.config.get('permissions.close')) {
       Logger.warn('当前角色权限校验【已关闭】')

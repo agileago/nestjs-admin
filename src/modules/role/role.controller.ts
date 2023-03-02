@@ -1,21 +1,30 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Result } from 'src/common/utils/result';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { QueryRoleDto } from './dto/query-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
-import { RoleService } from './role.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { RolesGuard } from 'src/common/guards/roles.guard'
+import { Result } from 'src/common/utils/result'
+import { CreateRoleDto } from './dto/create-role.dto'
+import { QueryRoleDto } from './dto/query-role.dto'
+import { UpdateRoleDto } from './dto/update-role.dto'
+import { RoleService } from './role.service'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
 
 @ApiTags('角色相关')
 @Controller('v1/roles')
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class RoleController {
-  constructor(
-    private readonly roleService: RoleService
-  ) { }
+  constructor(private readonly roleService: RoleService) {}
   @Get()
   @ApiOperation({ summary: '查询角色列表' })
   @Permissions('sys:role:list')
@@ -31,7 +40,6 @@ export class RoleController {
     const res = await this.roleService.create(dto)
     return Result.ok(res)
   }
-
 
   @Get(':id')
   @ApiOperation({ summary: '查询角色' })

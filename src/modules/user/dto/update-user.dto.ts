@@ -1,5 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator'
 
 export class UpdateUserDto {
   @ApiProperty({ description: 'id' })
@@ -44,10 +54,8 @@ export class UpdateUserDto {
   // @IsString({ message: '类型错误，正确类型 string' })
   dept_id: number | null
 
-
   @ApiProperty({ description: '确认密码', required: false })
   @IsString({ message: ' confirmPassword 类型错误，正确类型 string' })
   @IsOptional()
   readonly confirmPassword?: string
-
 }

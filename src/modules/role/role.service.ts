@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { classToPlain, plainToClass } from 'class-transformer';
-import { Like, Repository } from 'typeorm';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { QueryRoleDto } from './dto/query-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
-import { RoleEntity } from './role.entity';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { InjectRepository } from '@nestjs/typeorm'
+import { instanceToPlain, plainToClass } from 'class-transformer'
+import { Like, Repository } from 'typeorm'
+import { CreateRoleDto } from './dto/create-role.dto'
+import { QueryRoleDto } from './dto/query-role.dto'
+import { UpdateRoleDto } from './dto/update-role.dto'
+import { RoleEntity } from './role.entity'
 
 @Injectable()
 export class RoleService {
@@ -14,7 +14,7 @@ export class RoleService {
     @InjectRepository(RoleEntity)
     private readonly roleRepo: Repository<RoleEntity>,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   // 创建
   async create(dto: CreateRoleDto): Promise<Record<string, any>> {
@@ -33,10 +33,10 @@ export class RoleService {
       where,
       order: { created_at: 'DESC' },
       skip: size * (page - 1),
-      take: size
+      take: size,
     })
     return {
-      list: classToPlain(result),
+      list: instanceToPlain(result),
       page: page,
       size: size,
       count: total,
@@ -45,18 +45,18 @@ export class RoleService {
 
   // 根据ID查找
   async findById(id: number): Promise<Record<string, any>> {
-    let findOne = await this.roleRepo.findOne(id)
+    const findOne = await this.roleRepo.findOne({ where: { id } })
     if (!findOne) {
       throw new NotFoundException()
     }
-    return classToPlain(findOne)
+    return instanceToPlain(findOne)
   }
 
   // 根据ID更新
   async updateById(dto: UpdateRoleDto): Promise<Record<string, any>> {
     await this.findById(dto.id)
     await this.roleRepo.update(dto.id, dto)
-    return classToPlain(await this.findById(dto.id))
+    return instanceToPlain(await this.findById(dto.id))
   }
 
   // 根据ID删除
@@ -65,5 +65,4 @@ export class RoleService {
     const res = await this.roleRepo.softDelete(id)
     return res
   }
-
 }

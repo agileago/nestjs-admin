@@ -1,24 +1,41 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Result } from 'src/common/utils/result';
-import { CreateUserDto } from './dto/create-user.dto';
-import { QueryUserDto } from './dto/query-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserService } from './user.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { RolesGuard } from 'src/common/guards/roles.guard'
+import { Result } from 'src/common/utils/result'
+import { CreateUserDto } from './dto/create-user.dto'
+import { QueryUserDto } from './dto/query-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+import { UserService } from './user.service'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
-
 
 @ApiTags('用户相关')
 @Controller('v1/users')
 @ApiBearerAuth()
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
-  constructor(
-    private readonly userService: UserService
-  ) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @ApiOperation({ summary: '查询用户列表' })

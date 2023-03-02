@@ -1,29 +1,36 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
-import { Exclude, Transform, Type } from 'class-transformer';
-var dayjs = require('dayjs')
+import { Exclude, Transform } from 'class-transformer'
+import * as dayjs from 'dayjs'
+
 export class BaseEntity {
   @ApiProperty({ type: Number, description: 'id' })
-  @PrimaryGeneratedColumn({ type: "bigint", name: "id", comment: "id" })
-  id: number;
+  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', comment: 'id' })
+  id: number
 
   @ApiProperty({ type: Number, description: '创建者' })
-  @Column("bigint", { name: "creator", nullable: true, comment: "创建者" })
-  creator: number | null;
+  @Column('bigint', { name: 'creator', nullable: true, comment: '创建者' })
+  creator: number | null
 
   @ApiProperty({ type: Date, description: '创建时间' })
-  @Transform(({ value }) => dayjs(value).format("YYYY-MM-DD HH:mm:ss"), { toPlainOnly: true })
+  @Transform(({ value }) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'), { toPlainOnly: true })
   @CreateDateColumn({
     type: 'datetime',
     nullable: false,
     name: 'created_at',
     comment: '创建时间',
   })
-  created_at: Date | null;
+  created_at: Date | null
 
   @ApiProperty({ type: Number, description: '更新者' })
-  @Column("bigint", { name: "updater", nullable: true, comment: "更新者" })
-  updater: number | null;
+  @Column('bigint', { name: 'updater', nullable: true, comment: '更新者' })
+  updater: number | null
 
   @ApiProperty({ type: Date, description: '更新时间' })
   @UpdateDateColumn({
@@ -31,8 +38,8 @@ export class BaseEntity {
     name: 'updated_at',
     comment: '更新时间',
   })
-  @Transform(({ value }) => dayjs(value).format("YYYY-MM-DD HH:mm:ss"), { toPlainOnly: true })
-  updated_at: Date | null;
+  @Transform(({ value }) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'), { toPlainOnly: true })
+  updated_at: Date | null
 
   @Exclude()
   @DeleteDateColumn({
@@ -41,6 +48,6 @@ export class BaseEntity {
     select: false,
     comment: '删除',
   })
-  @Transform(({ value }) => dayjs(value).format("YYYY-MM-DD HH:mm:ss"), { toPlainOnly: true })
-  deleted_at: Date;
+  @Transform(({ value }) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'), { toPlainOnly: true })
+  deleted_at: Date
 }

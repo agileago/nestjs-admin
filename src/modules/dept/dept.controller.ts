@@ -1,21 +1,30 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Result } from 'src/common/utils/result';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { RolesGuard } from 'src/common/guards/roles.guard'
+import { Result } from 'src/common/utils/result'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
-import { DeptService } from './dept.service';
-import { CreateDeptDto } from './dto/create-dept.dto';
-import { QueryDeptDto } from './dto/query-dept.dto';
-import { UpdateDeptDto } from './dto/update-dept.dto';
+import { DeptService } from './dept.service'
+import { CreateDeptDto } from './dto/create-dept.dto'
+import { QueryDeptDto } from './dto/query-dept.dto'
+import { UpdateDeptDto } from './dto/update-dept.dto'
 
 @ApiTags('部门相关')
 @Controller('v1/depts')
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class DeptController {
-  constructor(
-    private readonly deptService: DeptService
-  ) { }
+  constructor(private readonly deptService: DeptService) {}
   @Get()
   @ApiOperation({ summary: '查询部门列表' })
   @Permissions('sys:dept:list')
@@ -31,7 +40,6 @@ export class DeptController {
     const res = await this.deptService.create(dto)
     return Result.ok(res)
   }
-
 
   @Get(':id')
   @ApiOperation({ summary: '查询部门' })

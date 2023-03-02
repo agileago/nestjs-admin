@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { classToPlain, plainToClass } from 'class-transformer';
-import { Like, Repository } from 'typeorm';
-import { DeptEntity } from './dept.entity';
-import { CreateDeptDto } from './dto/create-dept.dto';
-import { QueryDeptDto } from './dto/query-dept.dto';
-import { UpdateDeptDto } from './dto/update-dept.dto';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { InjectRepository } from '@nestjs/typeorm'
+import { instanceToPlain, plainToClass } from 'class-transformer'
+import { Like, Repository } from 'typeorm'
+import { DeptEntity } from './dept.entity'
+import { CreateDeptDto } from './dto/create-dept.dto'
+import { QueryDeptDto } from './dto/query-dept.dto'
+import { UpdateDeptDto } from './dto/update-dept.dto'
 
 @Injectable()
 export class DeptService {
@@ -14,7 +14,7 @@ export class DeptService {
     @InjectRepository(DeptEntity)
     private readonly deptRepo: Repository<DeptEntity>,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   // 创建
   async create(dto: CreateDeptDto): Promise<Record<string, any>> {
@@ -33,10 +33,10 @@ export class DeptService {
       where,
       order: { created_at: 'DESC' },
       skip: size * (page - 1),
-      take: size
+      take: size,
     })
     return {
-      list: classToPlain(result),
+      list: instanceToPlain(result),
       page: page,
       size: size,
       count: total,
@@ -45,18 +45,18 @@ export class DeptService {
 
   // 根据ID查找
   async findById(id: number): Promise<Record<string, any>> {
-    let findOne = await this.deptRepo.findOne(id)
+    const findOne = await this.deptRepo.findOne({ where: { id } })
     if (!findOne) {
       throw new NotFoundException()
     }
-    return classToPlain(findOne)
+    return instanceToPlain(findOne)
   }
 
   // 根据ID更新
   async updateById(dto: UpdateDeptDto): Promise<Record<string, any>> {
     await this.findById(dto.id)
     await this.deptRepo.update(dto.id, dto)
-    return classToPlain(await this.findById(dto.id))
+    return instanceToPlain(await this.findById(dto.id))
   }
 
   // 根据ID删除
@@ -65,5 +65,4 @@ export class DeptService {
     const res = await this.deptRepo.softDelete(id)
     return res
   }
-
 }

@@ -1,8 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator'
 
 export class CreateUserDto {
-
   @ApiProperty({ description: '用户名', required: true, default: null })
   @IsString({ message: 'username 类型错误，正确类型 string' })
   @IsNotEmpty({ message: 'username 不能为空' })
@@ -28,7 +37,7 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '邮箱', required: false, default: null })
   @IsString({ message: 'email 类型错误，正确类型 string' })
-  @IsEmail({},{message:'email 必须为邮箱地址'})
+  @IsEmail({}, { message: 'email 必须为邮箱地址' })
   @IsOptional()
   email: string | null
 
@@ -40,5 +49,4 @@ export class CreateUserDto {
   @ApiProperty({ description: '部门ID', default: null, required: false })
   // @IsString({ message: '类型错误，正确类型 string' })
   dept_id: number | null
-
 }
