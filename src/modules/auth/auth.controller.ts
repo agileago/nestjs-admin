@@ -10,7 +10,7 @@ import { UserService } from '../user/user.service'
 import { AuthService } from './auth.service'
 
 @ApiTags('登录注册')
-@Controller('v1/auth')
+@Controller('auth')
 export class AuthController {
   constructor(
     private readonly userService: UserService,
@@ -20,10 +20,8 @@ export class AuthController {
   @Post('register')
   @ApiOperation({ summary: '用户注册' })
   @ApiOkResponse({ type: UserEntity })
-  async create(@Body() user: CreateUserDto): Promise<Result> {
-    console.log('user', user)
-    const res = await this.userService.create(user)
-    return Result.ok(res)
+  create(@Body() user: CreateUserDto) {
+    return this.userService.create(user)
   }
 
   @Post('login')

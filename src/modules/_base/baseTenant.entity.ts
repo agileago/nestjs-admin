@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Column } from 'typeorm'
 import { BaseEntity } from './base.entity'
 
 export class BaseTenantEntity extends BaseEntity {

@@ -1,5 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
-import { BaseEntity } from '../_base/base.entity'
+import { Column, Entity, Index } from 'typeorm'
 import { BaseTenantEntity } from '../_base/baseTenant.entity'
 
 @Index('uk_tenant_code', ['tenant_code'], { unique: true })

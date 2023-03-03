@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany } from 'typeorm'
 import { UserPostEntity } from '../user/user-post.entity'
 import { BaseTenantEntity } from '../_base/baseTenant.entity'
 

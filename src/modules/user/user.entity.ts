@@ -1,17 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Exclude } from 'class-transformer'
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Column, Entity, Index, JoinColumn, OneToMany, OneToOne } from 'typeorm'
 import { DeptEntity } from '../dept/dept.entity'
 import { UserRoleEntity } from './user-role.entity'
-import { BaseEntity } from '../_base/base.entity'
 import { BaseTenantEntity } from '../_base/baseTenant.entity'
 import { UserPostEntity } from './user-post.entity'
 

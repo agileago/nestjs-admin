@@ -1,15 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  IsEmail,
-  IsMobilePhone,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsPhoneNumber,
-  IsString,
-  MaxLength,
-  MinLength,
-} from 'class-validator'
+import { IsNotEmpty, IsNumber } from 'class-validator'
 
 export class UpdateMenuDto {
   @ApiProperty({ description: 'id' })

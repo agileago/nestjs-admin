@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain, plainToClass } from 'class-transformer'
 import { Like, Repository } from 'typeorm'
@@ -13,7 +12,6 @@ export class RoleService {
   constructor(
     @InjectRepository(RoleEntity)
     private readonly roleRepo: Repository<RoleEntity>,
-    private readonly config: ConfigService,
   ) {}
 
   // 创建

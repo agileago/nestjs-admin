@@ -8,11 +8,8 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
 } from '@nestjs/common'
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
-import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Result } from 'src/common/utils/result'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { QueryRoleDto } from './dto/query-role.dto'
@@ -21,7 +18,7 @@ import { RoleService } from './role.service'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
 
 @ApiTags('角色相关')
-@Controller('v1/roles')
+@Controller('roles')
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

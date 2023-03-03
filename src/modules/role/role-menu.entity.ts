@@ -1,4 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, Index } from 'typeorm'
 import { BaseEntity } from '../_base/base.entity'
 
 @Index('idx_role_id', ['role_id'], {})

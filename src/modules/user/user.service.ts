@@ -6,11 +6,11 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { QueryUserDto } from './dto/query-user.dto'
 import { instanceToPlain, plainToClass } from 'class-transformer'
 import { RedisService } from '@liaoliaots/nestjs-redis'
-import { ConfigService } from '@nestjs/config'
 import { compare, genSalt, hash } from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { RedisKeyPrefix } from 'src/common/enums/redis-prefix.enum'
+import config from '@/config'
 
 @Injectable()
 export class UserService {
@@ -18,12 +18,11 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
     private readonly redisService: RedisService,
-    private readonly config: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
 
   // 创建
-  async create(dto: CreateUserDto): Promise<Record<string, any>> {
+  async create(dto: CreateUserDto) {
     const existing = await this.findByAccount(dto.username)
     if (existing)
       throw new HttpException('账号已存在，请调整后重新注册！', HttpStatus.NOT_ACCEPTABLE)
@@ -172,7 +171,7 @@ export class UserService {
   genToken(payload: { id: number }): Record<string, any> {
     const accessToken = `Bearer ${this.jwtService.sign(payload)}`
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: this.config.get('jwt.refreshExpiresIn'),
+      expiresIn: config.jwt.refreshExpiresIn,
     })
     return { accessToken, refreshToken }
   }

@@ -21,7 +21,7 @@ import { CreateMenuDto } from './dto/create-menu.dto'
 import { UpdateMenuDto } from './dto/update-menu.dto'
 
 @ApiTags('菜单相关')
-@Controller('v1/menus')
+@Controller('menus')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}

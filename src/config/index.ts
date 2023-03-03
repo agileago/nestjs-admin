@@ -1,15 +1,14 @@
-import { readFileSync } from 'fs'
-import * as yaml from 'js-yaml'
-import { join } from 'path'
+import Config from './config.default'
 
-const active = {
-  local: 'config.local.yml',
-  dev: 'config.dev.yml',
-  prod: 'config.prod.yml',
+let TargetConfig = Config
+
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  TargetConfig = require(`./config.${process.env.SERVER_ENV}`).default as typeof Config
+  console.log(`当前读取的环境配置为  ${process.env.SERVER_ENV}`)
+} catch (e: any) {
+  console.log('未获取到相对应的环境配置文件，使用默认配置')
 }
 
-export default () => {
-  return yaml.load(
-    readFileSync(join(__dirname, active[process.env.NODE_ENV] || active.prod), 'utf8'),
-  ) as Record<string, any>
-}
+const config = new TargetConfig()
+export default config

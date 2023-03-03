@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import { RoleEntity } from '../role/role.entity'
 import { BaseEntity } from '../_base/base.entity'
 import { UserEntity } from './user.entity'

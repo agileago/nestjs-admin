@@ -8,12 +8,9 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
 } from '@nestjs/common'
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
-import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Result } from 'src/common/utils/result'
 import { CreatePostDto } from './dto/create-post.dto'
 import { QueryPostDto } from './dto/query-post.dto'
@@ -21,7 +18,7 @@ import { UpdatePostDto } from './dto/update-post.dto'
 import { PostService } from './post.service'
 
 @ApiTags('岗位相关')
-@Controller('v1/posts')
+@Controller('posts')
 // @UseGuards(JwtAuthGuard, RolesGuard)
 export class PostController {
   constructor(private readonly postService: PostService) {}

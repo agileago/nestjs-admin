@@ -18,7 +18,7 @@ import { TenantService } from './tenant.service'
 import { Permissions } from 'src/common/decorator/permissions.decorator'
 
 @ApiTags('租户相关')
-@Controller('v1/tenants')
+@Controller('tenants')
 export class TenantController {
   constructor(private readonly tenantService: TenantService) {}
   @Get()

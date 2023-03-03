@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain, plainToClass } from 'class-transformer'
 import { Like, Repository } from 'typeorm'
@@ -13,18 +12,17 @@ export class DeptService {
   constructor(
     @InjectRepository(DeptEntity)
     private readonly deptRepo: Repository<DeptEntity>,
-    private readonly config: ConfigService,
   ) {}
 
   // 创建
-  async create(dto: CreateDeptDto): Promise<Record<string, any>> {
+  async create(dto: CreateDeptDto) {
     const data = plainToClass(DeptEntity, dto, { ignoreDecorators: true })
     const res = await this.deptRepo.save(data)
     return res
   }
 
   // 分页列表查找
-  async page(dto: QueryDeptDto): Promise<Record<string, any>> {
+  async page(dto: QueryDeptDto) {
     const { page = 1, size = 10, name } = dto
     const where = {
       ...(name ? { name: Like(`%${name}%`) } : null),
@@ -60,9 +58,9 @@ export class DeptService {
   }
 
   // 根据ID删除
-  async deleteById(id: number): Promise<Record<string, any>> {
+  async deleteById(id: number) {
     await this.findById(id)
-    const res = await this.deptRepo.softDelete(id)
+    const res = await this.deptRepo.delete(id)
     return res
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { instanceToPlain, plainToClass } from 'class-transformer'
 import { Repository } from 'typeorm'
@@ -13,7 +12,6 @@ export class MenuService {
   constructor(
     @InjectRepository(MenuEntity)
     private readonly menuRepo: Repository<MenuEntity>,
-    private readonly config: ConfigService,
   ) {}
 
   // 创建
